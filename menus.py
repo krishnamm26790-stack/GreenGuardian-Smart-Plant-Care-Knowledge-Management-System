@@ -40,7 +40,7 @@ def main_menu():
         print("4. Plant Knowledge")
         print("5. Exit")
 
-        choice = get_string("\nEnter your choice : ")
+        choice = get_int("\nEnter your choice : ")
 
         if choice == "1":
             plant_menu()
@@ -54,7 +54,7 @@ def main_menu():
         elif choice == "4":
             knowledge_menu()
 
-        elif choice == "5":
+        elif choice == 5:
             title("🌿 THANK YOU")
 
             print("""
