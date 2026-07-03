@@ -1,3 +1,8 @@
+from tabulate import tabulate
+
+
+from ui import *
+
 from services.plant_service import (
     add_plant,
     view_all_plants,
@@ -26,9 +31,8 @@ def main_menu():
 
     while True:
 
-        print("=" * 45)
-        print("🌿      GREEN GUARDIAN SYSTEM")
-        print("=" * 45)
+        title("🌿 GREEN GUARDIAN")
+
 
         print("1. Plant Management")
         print("2. Watering Management")
@@ -36,7 +40,7 @@ def main_menu():
         print("4. Plant Knowledge")
         print("5. Exit")
 
-        choice = input("\nEnter your choice : ")
+        choice = get_string("\nEnter your choice : ")
 
         if choice == "1":
             plant_menu()
@@ -51,18 +55,27 @@ def main_menu():
             knowledge_menu()
 
         elif choice == "5":
-            print("\n👋 Thank you!")
+            title("🌿 THANK YOU")
+
+            print("""
+            Thank you for using Green Guardian.
+
+            Developed by:
+            Krishna Mehra
+
+            Happy Gardening 🌱
+            """)
             break
 
         else:
-            print("❌ Invalid Choice")
+            error("Invalid choice.")
 
 
 def plant_menu():
 
     while True:
 
-        print("\n🌱 Plant Management")
+        title("🌱 PLANT MANAGEMENT")
 
         print("1. Add Plant")
         print("2. View Plants")
@@ -70,14 +83,14 @@ def plant_menu():
         print("4. Delete Plant")
         print("5. Back")
 
-        plant_choice = input("\nEnter your choice : ")
+        plant_choice = get_string("\nEnter your choice : ")
 
         if plant_choice == "1":
 
-            plant_name = input("Plant Name : ")
-            plant_type = input("Plant Type : ")
-            location = input("Location : ")
-            watering_frequency = int(input("Watering Frequency (days): "))
+            plant_name = get_string("Plant Name : ")
+            plant_type = get_string("Plant Type : ")
+            location = get_string("Location : ")
+            watering_frequency = get_int(("Watering Frequency (days): "))
 
             add_plant(
                 plant_name,
@@ -85,61 +98,79 @@ def plant_menu():
                 location,
                 watering_frequency
             )
+            success("Plant added successfully!")
+            pause()
 
         elif plant_choice == "2":
 
             plants = view_all_plants()
 
-            print("\n🌿 Plant List\n")
+            if plants:
 
-            for plant in plants:
+                headers = [
+                    "ID",
+                    "Plant Name",
+                    "Type",
+                    "Location",
+                    "Water Every (Days)"
+                ]
 
-                print("----------------------------")
-                print(f"ID : {plant[0]}")
-                print(f"Name : {plant[1]}")
-                print(f"Type : {plant[2]}")
-                print(f"Location : {plant[3]}")
-                print(f"Water Every : {plant[4]} day(s)")
+                print()
+                print(tabulate(plants, headers=headers, tablefmt="grid"))
+
+
+
+            else:
+
+                info("No plants found.")
+
+
 
         elif plant_choice == "3":
 
-            plant_id = int(input("Plant ID : "))
-            new_location = input("New Location : ")
+            plant_id = get_int(("Plant ID : "))
+            new_location = get_string("New Location : ")
 
             update_plant_location(
                 plant_id,
                 new_location
             )
+            success("Plant updated successfully!")
+            pause()
 
         elif plant_choice == "4":
 
-            plant_id = int(input("Plant ID : "))
+            plant_id = get_int(("Plant ID : "))
             delete_plant(plant_id)
+
+
+            success("Plant deleted successfully!")
+            pause()
 
         elif plant_choice == "5":
             break
 
         else:
-            print("❌ Invalid Choice")
+            error("Invalid choice.")
 
 
 def watering_menu():
 
     while True:
 
-        print("\n💧 Watering Management")
+        title("💧 WATERING MANAGEMENT")
 
         print("1. Record Watering")
         print("2. View Watering History")
         print("3. Delete Watering Record")
         print("4. Back")
 
-        water_choice = input("\nEnter your choice : ")
+        water_choice = get_string("\nEnter your choice : ")
 
         if water_choice == "1":
 
-            plant_id = int(input("Plant ID : "))
-            notes = input("Notes : ")
+            plant_id = get_int(("Plant ID : "))
+            notes = get_string("Notes : ")
 
             record_watering(
                 plant_id,
@@ -147,21 +178,28 @@ def watering_menu():
             )
 
         elif water_choice == "2":
-
             records = view_watering_history()
 
-            print("\n💧 Watering History\n")
+            if records:
 
-            for plant_name, watered_on, notes in records:
+                headers = [
+                    "Plant",
+                    "Watered On",
+                    "Notes"
+                ]
 
-                print("----------------------------")
-                print(f"🌿 Plant : {plant_name}")
-                print(f"📅 Date : {watered_on}")
-                print(f"📝 Notes : {notes}")
+                print()
+                print(tabulate(records, headers=headers, tablefmt="grid"))
+
+            else:
+
+                info("No watering records found.")
+
+            
 
         elif water_choice == "3":
 
-            log_id = int(input("Log ID : "))
+            log_id = get_int(("Log ID : "))
 
             delete_watering_log(log_id)
 
@@ -179,20 +217,20 @@ def health_menu():
 
     while True:
 
-        print("\n❤️ Health Monitoring")
+        title("❤️ HEALTH MONITORING")
 
         print("1. Record Health")
         print("2. View Health History")
         print("3. Delete Health Record")
         print("4. Back")
 
-        health_choice = input("\nEnter your choice : ")
+        health_choice = get_string("\nEnter your choice : ")
 
         if health_choice == "1":
 
-            plant_id = int(input("Plant ID : "))
-            status = input("Status : ")
-            notes = input("Notes : ")
+            plant_id = get_int(("Plant ID : "))
+            status = get_string("Status : ")
+            notes = get_string("Notes : ")
 
             record_health(
                 plant_id,
@@ -201,22 +239,28 @@ def health_menu():
             )
 
         elif health_choice == "2":
-
             records = view_health_history()
 
-            print("\n❤️ Health History\n")
+            if records:
 
-            for plant_name, status, observed_on, notes in records:
+                headers = [
+                    "Plant",
+                    "Status",
+                    "Observed On",
+                    "Notes"
+                ]
 
-                print("----------------------------")
-                print(f"🌱 Plant : {plant_name}")
-                print(f"💚 Status : {status}")
-                print(f"📅 Date : {observed_on}")
-                print(f"📝 Notes : {notes}")
+                print()
+                print(tabulate(records, headers=headers, tablefmt="grid"))
 
+            else:
+
+                info("No health records found.")
+
+            
         elif health_choice == "3":
 
-            log_id = int(input("Health Log ID : "))
+            log_id = get_int(("Health Log ID : "))
             delete_health_log(log_id)
 
         elif health_choice == "4":
@@ -232,26 +276,27 @@ def knowledge_menu():
 
     while True:
 
-        print("\n📚 Plant Knowledge")
+        title("📚 PLANT KNOWLEDGE")
 
         records = view_all_knowledge()
 
-        for (
-            plant_type,
-            scientific_name,
-            importance,
-            uses,
-            sunlight_requirement,
-            watering_tips
-        ) in records:
+        if records:
 
-            print("------------------------------")
-            print(f"🌱 Plant Type : {plant_type}")
-            print(f"🔬 Scientific Name : {scientific_name}")
-            print(f"⭐ Importance : {importance}")
-            print(f"🍃 Uses : {uses}")
-            print(f"☀️ Sunlight : {sunlight_requirement}")
-            print(f"💧 Watering Tips : {watering_tips}")
+            headers = [
+                "Plant Type",
+                "Scientific Name",
+                "Importance",
+                "Uses",
+                "Sunlight",
+                "Watering Tips"
+            ]
 
-        input("\nPress Enter to return to Main Menu...")
+            print()
+            print(tabulate(records, headers=headers, tablefmt="grid"))
+
+        else:
+
+            info("No knowledge available.")
+
+        get_string("\nPress Enter to return to Main Menu...")
         break
