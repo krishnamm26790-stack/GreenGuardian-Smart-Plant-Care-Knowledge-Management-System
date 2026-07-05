@@ -81,3 +81,94 @@ def delete_watering_log(log_id):
 
     cursor.close()
     connection.close()
+
+
+def plants_due_for_watering():
+    """
+    Returns all plants that need watering today.
+    """
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT
+        p.plant_id,
+        p.plant_name,
+        p.location,
+        p.watering_frequency,
+        MAX(w.watered_on) AS last_watered
+
+    FROM plants p
+
+    LEFT JOIN watering_logs w
+        ON p.plant_id = w.plant_id
+
+    GROUP BY
+        p.plant_id,
+        p.plant_name,
+        p.location,
+        p.watering_frequency
+
+    HAVING
+
+        MAX(w.watered_on) IS NULL
+
+        OR
+
+        CURRENT_DATE >=
+        MAX(w.watered_on) + p.watering_frequency
+
+    ORDER BY p.plant_name;
+    """
+
+    cursor.execute(query)
+
+    plants = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return plants
+
+def get_due_today_count():
+    """
+    Returns the number of plants that need watering today.
+    """
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT COUNT(*)
+    FROM plants p
+
+    LEFT JOIN
+    (
+        SELECT
+            plant_id,
+            MAX(watered_on) AS last_watered
+        FROM watering_logs
+        GROUP BY plant_id
+    ) w
+
+    ON p.plant_id = w.plant_id
+
+    WHERE
+
+        w.last_watered IS NULL
+
+        OR
+
+        CURRENT_DATE >=
+        (w.last_watered + p.watering_frequency);
+    """
+
+    cursor.execute(query)
+
+    total = cursor.fetchone()[0]
+
+    cursor.close()
+    connection.close()
+
+    return total

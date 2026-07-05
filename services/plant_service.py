@@ -104,3 +104,91 @@ def delete_plant(plant_id):
 
     cursor.close()
     connection.close()
+
+
+
+
+def search_plants(keyword):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM plants
+        WHERE
+            LOWER(plant_name) LIKE LOWER(%s)
+            OR LOWER(plant_type) LIKE LOWER(%s)
+            OR LOWER(location) LIKE LOWER(%s)
+        ORDER BY plant_id;
+    """, (
+        f"%{keyword}%",
+        f"%{keyword}%",
+        f"%{keyword}%"
+    ))
+
+    records = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return records
+
+def filter_by_type(plant_type):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM plants
+        WHERE LOWER(plant_type)=LOWER(%s)
+        ORDER BY plant_id;
+    """, (plant_type,))
+
+    plants = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return plants
+
+
+def filter_by_location(location):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM plants
+        WHERE LOWER(location)=LOWER(%s)
+        ORDER BY plant_id;
+    """, (location,))
+
+    plants = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return plants
+
+
+def filter_by_frequency(days):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM plants
+        WHERE watering_frequency=%s
+        ORDER BY plant_id;
+    """, (days,))
+
+    plants = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return plants

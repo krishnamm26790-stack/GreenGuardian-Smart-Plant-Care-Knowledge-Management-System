@@ -9,7 +9,9 @@ from ui import *
 
 from menus import main_menu
 
-                                                                                 
+from services.watering_service import get_due_today_count
+
+
 while True:
 
     title("🔐 GREEN GUARDIAN LOGIN")
@@ -46,8 +48,27 @@ while True:
 
             success(f"Welcome {session.current_user}!")
 
+            # Check if any plants need watering today
+            due_count = get_due_today_count()
+
+            if due_count > 0:
+
+                print()
+                print(f"⚠ {due_count} plant(s) need watering today!")
+
+                view = get_string("View reminders now? (Y/N): ")
+
+                if view.lower() == "y":
+
+                    # Import here to avoid circular import
+                    from menus import watering_reminder
+
+                    watering_reminder()
+
+            # Open Main Menu
             main_menu()
 
+            # Logout when exiting main menu
             session.current_user = None
 
         else:
