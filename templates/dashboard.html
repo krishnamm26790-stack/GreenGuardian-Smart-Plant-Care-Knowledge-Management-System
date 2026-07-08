@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-success mb-4">
+        🌿 GreenGuardian Dashboard
+    </h1>
+
+    <h4 class="mb-5">
+        Welcome {{ session.username }}
+    </h4>
+
+    <!-- Statistics Cards -->
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h2>🌱</h2>
+
+                    <h2>{{ total_plants }}</h2>
+
+                    <h5>Total Plants</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h2>💧</h2>
+
+                    <h2>{{ watering_logs }}</h2>
+
+                    <h5>Watering Records</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h2>❤️</h2>
+
+                    <h2>{{ health_logs }}</h2>
+
+                    <h5>Health Records</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Navigation Buttons -->
+
+    <div class="row mt-4">
+
+        <div class="col-md-4 mb-3">
+
+            <a href="{{ url_for('plants') }}" class="btn btn-success w-100">
+                🌿 Plant Management
+            </a>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+        <a href="/watering-reminder" class="btn btn-primary w-100">
+            💧 Watering Reminder
+        </a>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <a href="/health" class="btn btn-danger w-100">
+                ❤️ Health Monitoring
+            </a>        
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+        <a href="/statistics" class="btn btn-warning w-100">
+            📈 Statistics
+        </a>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <a href="/export" class="btn btn-info w-100">
+                📤 Export CSV
+            </a>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <a href="{{ url_for('logout') }}" class="btn btn-dark w-100">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

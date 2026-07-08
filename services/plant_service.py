@@ -56,30 +56,58 @@ def view_all_plants():
     return plants
 
 
+def get_plant_by_id(plant_id):
 
+    conn = get_connection()
+    cursor = conn.cursor()
 
-def update_plant_location(plant_id, new_location):
-    """
-    Updates the location of a plant.
-    """
+    cursor.execute("""
+        SELECT *
+        FROM plants
+        WHERE plant_id=%s
+    """, (plant_id,))
 
-    connection = get_connection()
-    cursor = connection.cursor()
-
-    query = """
-    UPDATE plants
-    SET location = %s
-    WHERE plant_id = %s;
-    """
-
-    cursor.execute(query, (new_location, plant_id))
-
-    connection.commit()
-
-    print("✅ Plant location updated successfully!")
+    plant = cursor.fetchone()
 
     cursor.close()
-    connection.close()
+    conn.close()
+
+    return plant
+
+
+
+
+def update_plant(
+    plant_id,
+    plant_name,
+    plant_type,
+    location,
+    watering_frequency
+):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE plants
+        SET
+            plant_name=%s,
+            plant_type=%s,
+            location=%s,
+            watering_frequency=%s
+        WHERE plant_id=%s
+    """, (
+        plant_name,
+        plant_type,
+        location,
+        watering_frequency,
+        plant_id
+    ))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
 
 
 

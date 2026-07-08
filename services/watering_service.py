@@ -38,6 +38,7 @@ def view_watering_history():
 
     query = """
     SELECT
+        w.log_id,
         p.plant_name,
         w.watered_on,
         w.notes
@@ -172,3 +173,24 @@ def get_due_today_count():
     connection.close()
 
     return total
+
+def get_all_plants():
+    """
+    Returns all plants for dropdown.
+    """
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT plant_id, plant_name
+        FROM plants
+        ORDER BY plant_name;
+    """)
+
+    plants = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return plants

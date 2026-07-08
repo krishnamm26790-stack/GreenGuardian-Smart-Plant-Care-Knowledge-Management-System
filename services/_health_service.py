@@ -40,13 +40,14 @@ def view_health_history():
 
     query = """
     SELECT
+        health_logs.health_log_id,
         plants.plant_name,
         health_logs.status,
         health_logs.observed_on,
         health_logs.notes
     FROM health_logs
     JOIN plants
-        ON plants.plant_id = health_logs.plant_id
+    ON plants.plant_id = health_logs.plant_id
     ORDER BY health_log_id DESC;
     """
 

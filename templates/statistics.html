@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+Statistics
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-success mb-4">
+        📊 Garden Statistics
+    </h1>
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-success text-white">
+
+                    🌱 Plants by Type
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+
+                        {% for row in type_stats %}
+
+                        <tr>
+
+                            <td>{{ row[0] }}</td>
+
+                            <td>{{ row[1] }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-primary text-white">
+
+                    📍 Plants by Location
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+
+                        {% for row in location_stats %}
+
+                        <tr>
+
+                            <td>{{ row[0] }}</td>
+
+                            <td>{{ row[1] }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-warning">
+
+                    💧 Watering Frequency
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+
+                        {% for row in frequency_stats %}
+
+                        <tr>
+
+                            <td>Every {{ row[0] }} Day(s)</td>
+
+                            <td>{{ row[1] }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="/dashboard" class="btn btn-secondary">
+
+        ⬅ Back to Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}

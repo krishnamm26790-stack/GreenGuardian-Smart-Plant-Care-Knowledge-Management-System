@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}
+Watering Reminder
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1 class="text-primary">
+            💧 Plants Due For Watering
+        </h1>
+
+        <a href="/watering" class="btn btn-primary">
+            📋 Watering Records
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Plant</th>
+                        <th>Location</th>
+                        <th>Water Every</th>
+                        <th>Last Watered</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% if plants %}
+
+                    {% for plant in plants %}
+
+                    <tr>
+
+                        <td>{{ plant[0] }}</td>
+                        <td>{{ plant[1] }}</td>
+                        <td>{{ plant[2] }}</td>
+                        <td>{{ plant[3] }} Day(s)</td>
+
+                        <td>
+
+                            {% if plant[4] %}
+                                {{ plant[4] }}
+                            {% else %}
+                                <span class="badge bg-danger">
+                                    Never Watered
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center text-success">
+
+                            🎉 Great! No plants need watering today.
+
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/dashboard" class="btn btn-secondary">
+
+        ⬅ Back to Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}

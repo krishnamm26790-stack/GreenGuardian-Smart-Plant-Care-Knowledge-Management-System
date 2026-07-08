@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Health Monitoring
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1 class="text-danger">
+            ❤️ Health Monitoring
+        </h1>
+
+        <a href="/add-health" class="btn btn-danger">
+            ➕ Add Health Record
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover table-striped">
+
+                <thead class="table-danger">
+
+                    <tr>
+
+                        <th>Plant</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for record in records %}
+
+                    <tr>
+
+                        <td>{{ record[1] }}</td>
+                        <td>{{ record[2] }}</td>
+                        <td>{{ record[3] }}</td>
+                        <td>{{ record[4] }}</td>
+
+                        <td>
+
+                        <a href="/delete-health/{{ record[0] }}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Delete this health record?')">
+
+                            🗑 Delete
+
+                        </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/dashboard" class="btn btn-secondary">
+
+        ⬅ Back to Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+Watering Management
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1 class="text-primary">
+            💧 Watering Management
+        </h1>
+
+        <a href="/add-watering" class="btn btn-primary">
+            ➕ Record Watering
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover table-striped">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>Plant</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>{{ record[1] }}</td>
+                        <td>{{ record[2] }}</td>
+                        <td>{{ record[3] }}</td>
+
+                        <td>
+
+                            <a href="/delete-watering/{{ record[0] }}"
+                               class="btn btn-danger btn-sm">
+
+                                🗑 Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <a href="/dashboard"
+       class="btn btn-secondary mt-4">
+
+        ⬅ Back to Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}

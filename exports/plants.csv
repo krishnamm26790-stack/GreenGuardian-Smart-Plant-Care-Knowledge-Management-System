@@ -5,7 +5,6 @@ Plant ID,Plant Name,Plant Type,Location,Water Every (Days),Quantity,Notes
 4,Rose Pot,Rose,Garden,2,1,
 5,Neem Plant,Neem,Front Yard,4,1,
 7,tulsi,sacred herb,balcony,2,1,
-8,1234,34567,45678,1,1,
 9,Red Rose 1,Flower,Terrace,2,2,
 10,Red Rose 2,Flower,Terrace,2,2,
 11,Dark Red Rose,Flower,Terrace,2,1,
@@ -33,3 +32,5 @@ Plant ID,Plant Name,Plant Type,Location,Water Every (Days),Quantity,Notes
 33,Snake Cucumber,Climber,Terrace,1,1,
 34,Watermelon,Climber,Terrace,1,1,
 35,Muskmelon,Climber,Terrace,1,1,
+36,pommegranate,fruit,Terrace,1,1,
+37,Mint,medicinal ,Terrace,2,1,
