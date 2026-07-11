@@ -1,74 +1,169 @@
 {% extends "base.html" %}
 
+{% block title %}
+Login | GreenGuardian
+{% endblock %}
+
 {% block content %}
 
-<div class="container mt-5" style="max-width:500px;">
+<div class="container py-5">
 
-    <h1 class="text-center text-success mb-4">
-        🔐 Login
-    </h1>
+    <div class="row align-items-center justify-content-center">
 
-    {% if error %}
+        <!-- Left Side -->
 
-    <div class="alert alert-danger">
+        <div class="col-lg-6 mb-5">
 
-        {{ error }}
+            <h1 class="display-3 fw-bold text-success">
 
-    </div>
+                🌿 GreenGuardian
 
-    {% endif %}
+            </h1>
 
-    <form method="POST">
+            <h3 class="fw-semibold mb-3">
 
-        <div class="mb-3">
+                Smart Plant Care Platform
 
-            <label class="form-label">
-                Username
-            </label>
+            </h3>
 
-            <input
-                type="text"
-                class="form-control"
-                name="username"
-                placeholder="Enter Username"
-                required>
+            <p class="lead text-muted">
+
+                Manage your plants effortlessly.
+
+                Track watering schedules, monitor plant health,
+                organize your garden and export reports —
+                all in one beautiful dashboard.
+
+            </p>
+
+            <div class="mt-4">
+
+                <span class="badge bg-success p-3 me-2">
+
+                    🌱 Plant Management
+
+                </span>
+
+                <span class="badge bg-primary p-3 me-2">
+
+                    💧 Watering Reminder
+
+                </span>
+
+                <span class="badge bg-danger p-3">
+
+                    ❤️ Health Monitoring
+
+                </span>
+
+            </div>
 
         </div>
 
-        <div class="mb-3">
 
-            <label class="form-label">
-                Password
-            </label>
+        <!-- Login Card -->
 
-            <input
-                type="password"
-                class="form-control"
-                name="password"
-                placeholder="Enter Password"
-                required>
+        <div class="col-lg-5">
+
+            <div class="card shadow-lg border-0 p-5 fade-up">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size:60px;">
+
+                        🔐
+
+                    </div>
+
+                    <h2 class="fw-bold text-success">
+
+                        Welcome Back
+
+                    </h2>
+
+                    <p class="text-muted">
+
+                        Login to continue
+
+                    </p>
+
+                </div>
+
+                {% if error %}
+
+                <div class="alert alert-danger">
+
+                    {{ error }}
+
+                </div>
+
+                {% endif %}
+
+                <form method="POST">
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Username
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="username"
+                            placeholder="Enter Username"
+                            required>
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Password
+
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            placeholder="Enter Password"
+                            required>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100 py-3">
+
+                        Login
+
+                    </button>
+
+                </form>
+
+                <hr>
+
+                <div class="text-center">
+
+                    Don't have an account?
+
+                    <a
+                        href="/register"
+                        class="fw-bold text-success text-decoration-none">
+
+                        Register
+
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
-
-        <button
-            type="submit"
-            class="btn btn-success w-100">
-
-            Login
-
-        </button>
-
-    </form>
-
-    <div class="text-center mt-3">
-
-        Don't have an account?
-
-        <a href="/register">
-
-            Register
-
-        </a>
 
     </div>
 

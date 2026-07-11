@@ -1,10 +1,13 @@
+import os
 import psycopg2
 
 
 def get_connection():
-    """
-    Creates and returns a PostgreSQL database connection.
-    """
+
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        return psycopg2.connect(database_url)
 
     return psycopg2.connect(
         host="localhost",
@@ -13,6 +16,3 @@ def get_connection():
         password="YourStrongPassword123",
         port="5432"
     )
-
-
-

@@ -6,35 +6,137 @@ Health Monitoring
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Hero Section -->
 
-        <h1 class="text-danger">
-            ❤️ Health Monitoring
-        </h1>
+    <div class="row align-items-center mb-5">
 
-        <a href="/add-health" class="btn btn-danger">
-            ➕ Add Health Record
-        </a>
+        <div class="col-lg-8">
+
+            <h1 class="display-3 fw-bold mb-3">
+                ❤️ Health Center
+            </h1>
+
+            <p class="lead text-muted">
+                Monitor your plant health, detect problems early and keep your
+                garden thriving with detailed health records.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+
+            <a href="/add-health"
+               class="btn btn-danger btn-lg px-5 shadow rounded-3">
+
+                ➕ Record Health
+
+            </a>
+
+        </div>
 
     </div>
 
-    <div class="card shadow">
+    <!-- Summary Cards -->
+
+    <div class="row mb-5">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>❤️</h1>
+
+                    <h1>{{ records|length }}</h1>
+
+                    <h4>Health Records</h4>
+
+                    <p class="text-muted">
+                        Total health history
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>🌿</h1>
+
+                    <h2>Healthy</h2>
+
+                    <h4>Garden Status</h4>
+
+                    <p class="text-muted">
+                        Keep monitoring regularly
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>📋</h1>
+
+                    <h1>{{ records|length }}</h1>
+
+                    <h4>Recent Logs</h4>
+
+                    <p class="text-muted">
+                        Latest health updates
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Health History -->
+
+    <div class="card border-0 shadow rounded-4">
+
+        <div class="card-header bg-danger text-white rounded-top-4 py-3">
+
+            <h3 class="mb-0">
+
+                ❤️ Health History
+
+            </h3>
+
+        </div>
 
         <div class="card-body">
 
-            <table class="table table-hover table-striped">
+            <table class="table table-hover align-middle">
 
-                <thead class="table-danger">
+                <thead>
 
                     <tr>
 
-                        <th>Plant</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Notes</th>
-                        <th>Actions</th>
+                        <th>🌿 Plant</th>
+                        <th>❤️ Status</th>
+                        <th>📅 Date</th>
+                        <th>📝 Notes</th>
+                        <th class="text-center">Actions</th>
 
                     </tr>
 
@@ -42,30 +144,89 @@ Health Monitoring
 
                 <tbody>
 
-                {% for record in records %}
+                {% if records %}
+
+                    {% for record in records %}
 
                     <tr>
 
-                        <td>{{ record[1] }}</td>
-                        <td>{{ record[2] }}</td>
-                        <td>{{ record[3] }}</td>
-                        <td>{{ record[4] }}</td>
+                        <td class="fw-semibold">
+
+                            {{ record[1] }}
+
+                        </td>
 
                         <td>
 
-                        <a href="/delete-health/{{ record[0] }}"
-                        class="btn btn-danger btn-sm"
-                        onclick="return confirm('Delete this health record?')">
+                            {% if record[2]|lower == "healthy" %}
 
-                            🗑 Delete
+                                <span class="badge bg-success px-3 py-2">
 
-                        </a>
+                                    Healthy
+
+                                </span>
+
+                            {% elif record[2]|lower == "needs attention" %}
+
+                                <span class="badge bg-warning text-dark px-3 py-2">
+
+                                    Needs Attention
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger px-3 py-2">
+
+                                    {{ record[2] }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ record[3] }}</td>
+
+                        <td>{{ record[4] }}</td>
+
+                        <td class="text-center">
+
+                            <a href="/delete-health/{{ record[0] }}"
+                               class="btn btn-danger btn-sm rounded-pill px-3"
+                               onclick="return confirm('Delete this health record?')">
+
+                                🗑 Delete
+
+                            </a>
 
                         </td>
 
                     </tr>
 
-                {% endfor %}
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center py-5">
+
+                            <h2>🎉</h2>
+
+                            <h4>No Health Records Yet</h4>
+
+                            <p class="text-muted">
+
+                                Start monitoring your plants by adding a health record.
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                {% endif %}
 
                 </tbody>
 
@@ -75,13 +236,16 @@ Health Monitoring
 
     </div>
 
-    <br>
+    <div class="text-center mt-5">
 
-    <a href="/dashboard" class="btn btn-secondary">
+        <a href="/dashboard"
+           class="btn btn-outline-secondary btn-lg rounded-pill px-5">
 
-        ⬅ Back to Dashboard
+            ← Back to Dashboard
 
-    </a>
+        </a>
+
+    </div>
 
 </div>
 

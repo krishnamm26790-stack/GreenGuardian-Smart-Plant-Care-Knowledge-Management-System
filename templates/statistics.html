@@ -6,19 +6,127 @@ Statistics
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <h1 class="text-success mb-4">
-        📊 Garden Statistics
-    </h1>
+    <!-- Hero Section -->
+
+    <div class="row align-items-center mb-5">
+
+        <div class="col-lg-8">
+
+            <h1 class="display-3 fw-bold mb-3">
+                📊 Garden Analytics
+            </h1>
+
+            <p class="lead text-muted">
+                Gain valuable insights into your garden with detailed statistics
+                on plant categories, locations and watering schedules.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+
+            <a href="/dashboard"
+               class="btn btn-success btn-lg px-5 shadow rounded-3">
+
+                🏠 Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Summary Cards -->
+
+    <div class="row mb-5">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>🌱</h1>
+
+                    <h2>{{ type_stats|length }}</h2>
+
+                    <h4>Plant Categories</h4>
+
+                    <p class="text-muted">
+
+                        Different plant types
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>📍</h1>
+
+                    <h2>{{ location_stats|length }}</h2>
+
+                    <h4>Growing Locations</h4>
+
+                    <p class="text-muted">
+
+                        Garden distribution
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body text-center py-5">
+
+                    <h1>💧</h1>
+
+                    <h2>{{ frequency_stats|length }}</h2>
+
+                    <h4>Water Schedules</h4>
+
+                    <p class="text-muted">
+
+                        Different watering plans
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics Tables -->
 
     <div class="row">
 
-        <div class="col-md-4">
+        <!-- Plant Types -->
 
-            <div class="card shadow mb-4">
+        <div class="col-lg-4 mb-4">
 
-                <div class="card-header bg-success text-white">
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-header bg-success text-white rounded-top-4">
 
                     🌱 Plants by Type
 
@@ -26,19 +134,43 @@ Statistics
 
                 <div class="card-body">
 
-                    <table class="table">
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Type</th>
+
+                                <th class="text-end">Count</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
 
                         {% for row in type_stats %}
 
-                        <tr>
+                            <tr>
 
-                            <td>{{ row[0] }}</td>
+                                <td>{{ row[0] }}</td>
 
-                            <td>{{ row[1] }}</td>
+                                <td class="text-end">
 
-                        </tr>
+                                    <span class="badge bg-success">
+
+                                        {{ row[1] }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
 
                         {% endfor %}
+
+                        </tbody>
 
                     </table>
 
@@ -48,11 +180,13 @@ Statistics
 
         </div>
 
-        <div class="col-md-4">
+        <!-- Locations -->
 
-            <div class="card shadow mb-4">
+        <div class="col-lg-4 mb-4">
 
-                <div class="card-header bg-primary text-white">
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-header bg-primary text-white rounded-top-4">
 
                     📍 Plants by Location
 
@@ -60,19 +194,43 @@ Statistics
 
                 <div class="card-body">
 
-                    <table class="table">
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Location</th>
+
+                                <th class="text-end">Count</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
 
                         {% for row in location_stats %}
 
-                        <tr>
+                            <tr>
 
-                            <td>{{ row[0] }}</td>
+                                <td>{{ row[0] }}</td>
 
-                            <td>{{ row[1] }}</td>
+                                <td class="text-end">
 
-                        </tr>
+                                    <span class="badge bg-primary">
+
+                                        {{ row[1] }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
 
                         {% endfor %}
+
+                        </tbody>
 
                     </table>
 
@@ -82,11 +240,13 @@ Statistics
 
         </div>
 
-        <div class="col-md-4">
+        <!-- Water Frequency -->
 
-            <div class="card shadow mb-4">
+        <div class="col-lg-4 mb-4">
 
-                <div class="card-header bg-warning">
+            <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-header bg-warning rounded-top-4">
 
                     💧 Watering Frequency
 
@@ -94,19 +254,47 @@ Statistics
 
                 <div class="card-body">
 
-                    <table class="table">
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Schedule</th>
+
+                                <th class="text-end">Plants</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
 
                         {% for row in frequency_stats %}
 
-                        <tr>
+                            <tr>
 
-                            <td>Every {{ row[0] }} Day(s)</td>
+                                <td>
 
-                            <td>{{ row[1] }}</td>
+                                    Every {{ row[0] }} Day(s)
 
-                        </tr>
+                                </td>
+
+                                <td class="text-end">
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        {{ row[1] }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
 
                         {% endfor %}
+
+                        </tbody>
 
                     </table>
 
@@ -118,11 +306,18 @@ Statistics
 
     </div>
 
-    <a href="/dashboard" class="btn btn-secondary">
+    <!-- Footer -->
 
-        ⬅ Back to Dashboard
+    <div class="text-center mt-5">
 
-    </a>
+        <a href="/dashboard"
+           class="btn btn-outline-secondary btn-lg rounded-pill px-5">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
 
 </div>
 

@@ -1,0 +1,820 @@
+/* ==========================================
+   GreenGuardian v2.5 Design System
+========================================== */
+
+:root{
+
+    --primary:#2E7D32;
+    --secondary:#43A047;
+    --accent:#81C784;
+
+    --background:#F5F9F4;
+
+    --white:#FFFFFF;
+
+    --text:#263238;
+
+    --danger:#E53935;
+
+    --warning:#FFA000;
+
+    --shadow:
+        0 12px 35px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+}
+
+/* ===========================
+   RESET
+=========================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--background);
+
+    color:var(--text);
+
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+
+.navbar{
+
+    background:white !important;
+
+    padding:18px 0;
+
+    box-shadow:var(--shadow);
+
+}
+
+.navbar-brand{
+
+    font-size:28px;
+
+    color:var(--primary)!important;
+
+    font-weight:700;
+
+}
+
+.nav-link{
+
+    color:#555!important;
+
+    font-weight:500;
+
+    margin-left:12px;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:var(--primary)!important;
+
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.btn{
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    padding:10px 24px;
+
+    transition:.35s;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.btn-success{
+
+    background:var(--primary);
+
+    border:none;
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+    border:none;
+
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.card{
+
+    border:none;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ===========================
+   FORMS
+=========================== */
+
+.form-control{
+
+    border-radius:12px;
+
+    padding:12px;
+
+}
+
+.form-control:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+    0 0 0 .2rem rgba(46,125,50,.2);
+
+}
+
+/* ===========================
+   TABLES
+=========================== */
+
+.table{
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+}
+
+.table thead{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* ===========================
+   ALERTS
+=========================== */
+
+.alert{
+
+    border:none;
+
+    border-radius:15px;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+
+    color:#666;
+
+    margin-top:80px;
+
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+.fade-up{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* Dashboard Cards */
+
+.action-card{
+    transition:0.35s;
+    cursor:pointer;
+}
+
+.action-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(0,0,0,.15)!important;
+}
+
+.card{
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.display-4{
+    font-size:3rem;
+}
+
+/*======================================================
+            GREENGUARDIAN PREMIUM BACKGROUND
+======================================================*/
+
+body{
+
+    background: linear-gradient(
+        135deg,
+        #f7fff8 0%,
+        #edfdf1 40%,
+        #e5f8ea 100%
+    );
+
+    min-height:100vh;
+
+    position:relative;
+
+    overflow-x:hidden;
+
+}
+
+
+/* Floating Gradient Blob */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+
+    height:500px;
+
+    background:#8df3a4;
+
+    border-radius:50%;
+
+    filter:blur(140px);
+
+    opacity:.28;
+
+    top:-180px;
+
+    left:-150px;
+
+    z-index:-2;
+
+}
+
+
+/* Second Blob */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:420px;
+
+    height:420px;
+
+    background:#74b9ff;
+
+    border-radius:50%;
+
+    filter:blur(150px);
+
+    opacity:.18;
+
+    bottom:-180px;
+
+    right:-120px;
+
+    z-index:-2;
+
+}
+
+
+/*======================================================
+                    GLASS EFFECT
+======================================================*/
+
+.glass{
+
+    background:rgba(255,255,255,.62);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.4);
+
+    border-radius:22px;
+
+}
+
+
+/*======================================================
+                PREMIUM CARDS
+======================================================*/
+
+.card{
+
+    border:none;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,.70);
+
+    backdrop-filter:blur(12px);
+
+    transition:.35s;
+
+    overflow:hidden;
+
+}
+
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 22px 55px rgba(0,0,0,.12);
+
+}
+
+
+/*======================================================
+                PREMIUM BUTTONS
+======================================================*/
+
+.btn{
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/*======================================================
+                SECTION TITLES
+======================================================*/
+
+.display-4{
+
+    font-weight:800;
+
+}
+
+
+h1,h2,h3{
+
+    letter-spacing:-.5px;
+
+}
+
+
+/*======================================================
+                ACTION CARDS
+======================================================*/
+
+.action-card{
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+
+.action-card:hover{
+
+    transform:translateY(-10px) scale(1.02);
+
+}
+
+
+/*======================================================
+                    SCROLLBAR
+======================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2ecc71;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+/* ==========================
+   Plant Cards
+========================== */
+
+.plant-card{
+
+    transition:.35s;
+
+    border-radius:22px;
+
+}
+
+.plant-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15)!important;
+
+}
+
+.plant-card .badge{
+
+    font-size:.8rem;
+
+    padding:8px 12px;
+
+}
+
+.plant-card h3{
+
+    font-weight:700;
+
+}
+
+.plant-card p{
+
+    color:#555;
+
+    margin-bottom:12px;
+
+}
+
+.plant-card .btn{
+
+    border-radius:12px;
+
+}
+
+/* ===========================
+   PREMIUM PLANT CARD
+=========================== */
+
+.plant-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    transition:.35s;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.08);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.plant-card:hover{
+
+    transform:
+    translateY(-10px);
+
+    box-shadow:
+    0 25px 45px rgba(46,125,50,.25);
+
+}
+
+.plant-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:linear-gradient(
+    90deg,
+    #2E7D32,
+    #43A047);
+
+}
+
+.plant-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+.plant-card h3{
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.plant-id{
+
+    background:#F4F6F9;
+
+    padding:8px 14px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+}
+
+.plant-badge{
+
+    display:inline-block;
+
+    background:linear-gradient(
+    90deg,
+    #2E7D32,
+    #43A047);
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+}
+
+.plant-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:18px 0;
+
+}
+
+.plant-info p{
+
+    margin:0;
+
+    color:#555;
+
+}
+
+.plant-info span{
+
+    font-weight:600;
+
+}
+
+.edit-btn{
+
+    background:#FFC107;
+
+    border:none;
+
+    color:black;
+
+    font-weight:600;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.edit-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#FFB300;
+
+}
+
+.delete-btn{
+
+    background:#E53935;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.delete-btn:hover{
+
+    background:#C62828;
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+   PREMIUM FORM DESIGN
+===================================== */
+
+.glass-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:40px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.10);
+
+    transition:.35s;
+
+}
+
+.glass-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.form-control{
+
+    border-radius:14px;
+
+    padding:15px;
+
+    border:1px solid #dcdcdc;
+
+    transition:.3s;
+
+}
+
+.form-control:focus{
+
+    border-color:#2E7D32;
+
+    box-shadow:0 0 15px rgba(46,125,50,.18);
+
+}
+
+.btn-success{
+
+    border-radius:14px;
+
+    transition:.35s;
+
+}
+
+.btn-success:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 25px rgba(46,125,50,.25);
+
+}
+
+.btn-outline-secondary{
+
+    border-radius:14px;
+
+}
+
+.badge{
+
+    font-size:.9rem;
+
+    border-radius:50px;
+
+}
+
+/* Update Button */
+
+.btn-warning{
+
+    border-radius:14px;
+
+    color:#222;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.btn-warning:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 25px rgba(255,193,7,.35);
+
+}
+.action-card{
+    transition:0.3s ease;
+}
+
+.action-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+
+}

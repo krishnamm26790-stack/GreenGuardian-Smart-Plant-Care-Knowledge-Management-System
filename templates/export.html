@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}
+Export Center
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- Hero -->
+
+    <div class="row align-items-center mb-5">
+
+        <div class="col-lg-8">
+
+            <h1 class="display-2 fw-bold mb-3">
+                📤 Export Center
+            </h1>
+
+            <p class="fs-3 text-muted">
+                Export your complete garden database into CSV files for
+                backup, reporting and analysis.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-end">
+
+            <a href="/dashboard"
+               class="btn btn-success btn-lg px-5 py-3 shadow">
+
+                🏡 Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Info Cards -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-lg rounded-5 text-center p-4 h-100">
+
+                <div class="display-3">
+                    🌿
+                </div>
+
+                <h2 class="fw-bold mt-3">
+                    Plant Data
+                </h2>
+
+                <p class="text-muted">
+                    Export all plants with complete information.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-lg rounded-5 text-center p-4 h-100">
+
+                <div class="display-3">
+                    💧
+                </div>
+
+                <h2 class="fw-bold mt-3">
+                    Water Records
+                </h2>
+
+                <p class="text-muted">
+                    Backup every watering activity.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-lg rounded-5 text-center p-4 h-100">
+
+                <div class="display-3">
+                    ❤️
+                </div>
+
+                <h2 class="fw-bold mt-3">
+                    Health Logs
+                </h2>
+
+                <p class="text-muted">
+                    Keep a permanent record of plant health.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Export Panel -->
+
+    <div class="card border-0 shadow-lg rounded-5">
+
+        <div class="card-header bg-success text-white fs-3 rounded-top-5">
+
+            📁 Export Options
+
+        </div>
+
+        <div class="card-body text-center py-5">
+
+            <h2 class="fw-bold mb-3">
+
+                Download Garden Report
+
+            </h2>
+
+            <p class="text-muted fs-5 mb-5">
+
+                Export your GreenGuardian database into a CSV file.
+
+            </p>
+
+            <a href="/export-csv"
+               class="btn btn-success btn-lg px-5 py-3 shadow">
+
+                ⬇ Download CSV
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

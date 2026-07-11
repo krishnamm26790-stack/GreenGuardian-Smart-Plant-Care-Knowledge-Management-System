@@ -1,36 +1,91 @@
 {% extends "base.html" %}
 
 {% block title %}
-Dashboard
+Dashboard | GreenGuardian
 {% endblock %}
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <h1 class="text-success mb-4">
-        🌿 GreenGuardian Dashboard
-    </h1>
+    <!-- HERO SECTION -->
 
-    <h4 class="mb-5">
-        Welcome {{ session.username }}
-    </h4>
+    <div class="row align-items-center mb-5">
 
-    <!-- Statistics Cards -->
+        <div class="col-lg-8">
 
-    <div class="row">
+            <h1 class="display-4 fw-bold mb-3">
+                🌿 GreenGuardian
+            </h1>
 
-        <div class="col-md-4 mb-4">
+            <h3 class="text-success">
+                Welcome back,
+                <span class="fw-bold">{{ session.username }}</span> 👋
+            </h3>
 
-            <div class="card shadow">
+            <p class="text-secondary fs-5 mt-3">
+                Manage your plants, monitor their health,
+                track watering schedules and export reports —
+                all from one beautiful dashboard.
+            </p>
 
-                <div class="card-body text-center">
+        </div>
 
-                    <h2>🌱</h2>
+        <div class="col-lg-4 text-center">
 
-                    <h2>{{ total_plants }}</h2>
+            <div class="card border-0 shadow-lg rounded-4 p-4">
 
-                    <h5>Total Plants</h5>
+                <h1>🌱</h1>
+
+                <h4 class="fw-bold text-success">
+
+                    Garden Overview
+
+                </h4>
+
+                <p class="text-muted mb-0">
+
+                    Everything looks healthy today.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STATISTICS -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="display-4">
+                        🌱
+                    </div>
+
+                    <h1 class="fw-bold mt-3">
+
+                        {{ total_plants }}
+
+                    </h1>
+
+                    <h5 class="text-success">
+
+                        Total Plants
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        Your complete garden
+
+                    </small>
 
                 </div>
 
@@ -38,96 +93,244 @@ Dashboard
 
         </div>
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4">
 
-            <div class="card shadow">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
 
-                <div class="card-body text-center">
+                <div class="card-body text-center p-4">
+
+                    <div class="display-4">
+                        💧
+                    </div>
+
+                    <h1 class="fw-bold mt-3">
+
+                        {{ watering_logs }}
+
+                    </h1>
+
+                    <h5 class="text-primary">
+
+                        Watering Records
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        Total watering history
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="display-4">
+                        ❤️
+                    </div>
+
+                    <h1 class="fw-bold mt-3">
+
+                        {{ health_logs }}
+
+                    </h1>
+
+                    <h5 class="text-danger">
+
+                        Health Records
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        Plant health updates
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- QUICK ACTIONS -->
+
+    <h3 class="fw-bold mb-4">
+
+        ⚡ Quick Actions
+
+    </h3>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <a href="{{ url_for('plants') }}"
+               class="text-decoration-none">
+
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
+
+                    <h2>🌿</h2>
+
+                    <h4 class="mt-3">
+
+                        Plant Management
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Add, update and organize your plants.
+
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <a href="/watering-reminder"
+               class="text-decoration-none">
+
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
 
                     <h2>💧</h2>
 
-                    <h2>{{ watering_logs }}</h2>
+                    <h4 class="mt-3">
 
-                    <h5>Watering Records</h5>
+                        Watering Reminder
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Check plants due for watering.
+
+                    </p>
 
                 </div>
 
-            </div>
+            </a>
 
         </div>
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4">
 
-            <div class="card shadow">
+            <a href="/health"
+               class="text-decoration-none">
 
-                <div class="card-body text-center">
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
 
                     <h2>❤️</h2>
 
-                    <h2>{{ health_logs }}</h2>
+                    <h4 class="mt-3">
 
-                    <h5>Health Records</h5>
+                        Health Monitoring
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Record and monitor plant health.
+
+                    </p>
 
                 </div>
 
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Navigation Buttons -->
-
-    <div class="row mt-4">
-
-        <div class="col-md-4 mb-3">
-
-            <a href="{{ url_for('plants') }}" class="btn btn-success w-100">
-                🌿 Plant Management
             </a>
 
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4">
 
-        <a href="/watering-reminder" class="btn btn-primary w-100">
-            💧 Watering Reminder
-        </a>
+            <a href="/statistics"
+               class="text-decoration-none">
 
-        </div>
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
 
-        <div class="col-md-4 mb-3">
+                    <h2>📊</h2>
 
-            <a href="/health" class="btn btn-danger w-100">
-                ❤️ Health Monitoring
-            </a>        
+                    <h4 class="mt-3">
 
-        </div>
+                        Statistics
 
-    </div>
+                    </h4>
 
-    <div class="row">
+                    <p class="text-muted mb-0">
 
-        <div class="col-md-4 mb-3">
+                        View insights and analytics.
 
-        <a href="/statistics" class="btn btn-warning w-100">
-            📈 Statistics
-        </a>
+                    </p>
 
-        </div>
+                </div>
 
-        <div class="col-md-4 mb-3">
-
-            <a href="/export" class="btn btn-info w-100">
-                📤 Export CSV
             </a>
 
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4">
 
-            <a href="{{ url_for('logout') }}" class="btn btn-dark w-100">
-                🚪 Logout
+            <a href="/export"
+               class="text-decoration-none">
+
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
+
+                    <h2>📤</h2>
+
+                    <h4 class="mt-3">
+
+                        Export CSV
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Download all your records.
+
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <a href="{{ url_for('logout') }}"
+               class="text-decoration-none">
+
+                <div class="card border-0 shadow rounded-4 p-4 h-100 action-card">
+
+                    <h2>🚪</h2>
+
+                    <h4 class="mt-3">
+
+                        Logout
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        End your current session.
+
+                    </p>
+
+                </div>
+
             </a>
 
         </div>

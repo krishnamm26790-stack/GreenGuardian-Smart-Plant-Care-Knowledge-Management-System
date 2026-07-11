@@ -6,195 +6,287 @@ Plant Management
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- ====================== -->
+    <!-- Hero Header -->
+    <!-- ====================== -->
 
-        <h1 class="text-success">
-            🌿 Plant Management
-        </h1>
+    <div class="row align-items-center mb-5">
 
-        <a href="/add-plant" class="btn btn-success">
-            ➕ Add Plant
+        <div class="col-lg-8">
+
+            <h1 class="display-4 fw-bold mb-3">
+
+                🌿 Plant Collection
+
+            </h1>
+
+            <p class="lead text-muted">
+
+                Organize, monitor and manage every plant in your garden
+                with an elegant dashboard.
+
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+            <a href="/add-plant"
+               class="btn btn-success btn-lg px-4 py-3 shadow">
+
+                <i class="bi bi-plus-circle-fill me-2"></i>
+
+                Add New Plant
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ====================== -->
+    <!-- Search Card -->
+    <!-- ====================== -->
+
+    <div class="card border-0 shadow-lg mb-5">
+
+        <div class="card-body p-4">
+
+            <form action="/plants" method="GET">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-4">
+
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            name="search"
+                            placeholder="🔍 Search plant name">
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <select
+                            class="form-select form-select-lg"
+                            name="type">
+
+                            <option value="">Plant Type</option>
+                            <option value="medicinal">Medicinal</option>
+                            <option value="flower">Flower</option>
+                            <option value="fruit">Fruit</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="indoor">Indoor</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <select
+                            class="form-select form-select-lg"
+                            name="location">
+
+                            <option value="">Location</option>
+                            <option value="terrence">Terrace</option>
+                            <option value="garden">Garden</option>
+                            <option value="balcony">Balcony</option>
+                            <option value="indoor">Indoor</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <select
+                            class="form-select form-select-lg"
+                            name="frequency">
+
+                            <option value="">Water</option>
+                            <option value="1">1 Day</option>
+                            <option value="2">2 Days</option>
+                            <option value="3">3 Days</option>
+                            <option value="5">5 Days</option>
+                            <option value="7">7 Days</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-1 d-grid">
+
+                        <button
+                            class="btn btn-success btn-lg">
+
+                            <i class="bi bi-search"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="col-lg-1 d-grid">
+
+                        <a href="/plants"
+                           class="btn btn-outline-secondary btn-lg">
+
+                            <i class="bi bi-arrow-clockwise"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+<!-- ========================= -->
+<!-- Plant Cards -->
+<!-- ========================= -->
+
+<div class="row g-4">
+
+{% if plants %}
+
+{% for plant in plants %}
+
+<div class="col-lg-4 col-md-6 mb-4">
+
+    <div class="plant-card">
+
+        <div class="plant-card-header">
+
+            <div>
+
+                <h3>
+                    🌿 {{ plant[1] }}
+                </h3>
+
+                <span class="plant-badge">
+                    {{ plant[2] }}
+                </span>
+
+            </div>
+
+            <span class="plant-id">
+
+                #{{ plant[0] }}
+
+            </span>
+
+        </div>
+
+        <hr>
+
+        <div class="plant-info">
+
+            <p>
+
+                📍
+                <strong>Location</strong>
+
+            </p>
+
+            <span>
+
+                {{ plant[3] }}
+
+            </span>
+
+        </div>
+
+        <div class="plant-info">
+
+            <p>
+
+                💧
+                <strong>Water Every</strong>
+
+            </p>
+
+            <span>
+
+                {{ plant[4] }} Day(s)
+
+            </span>
+
+        </div>
+
+        <div class="mt-4 d-grid gap-2">
+
+            <a
+                href="/edit-plant/{{ plant[0] }}"
+                class="btn edit-btn">
+
+                ✏ Edit Plant
+
+            </a>
+
+            <a
+                href="/delete-plant/{{ plant[0] }}"
+                onclick="return confirm('Delete this plant?')"
+                class="btn delete-btn">
+
+                🗑 Delete Plant
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="col-12">
+
+    <div class="card border-0 shadow-lg rounded-4 p-5 text-center">
+
+        <h2>
+
+            🌱
+
+        </h2>
+
+        <h3>
+
+            No Plants Found
+
+        </h3>
+
+        <p class="text-muted">
+
+            Start building your digital garden.
+
+        </p>
+
+        <a
+            href="/add-plant"
+            class="btn btn-success">
+
+            Add First Plant
+
         </a>
 
     </div>
 
-    <!-- Search + Filters -->
+</div>
 
-    <form action="/plants" method="GET" class="mb-4">
+{% endif %}
 
-        <div class="row g-2">
-
-            <div class="col-md-3">
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="search"
-                    placeholder="🔍 Search by Name">
-
-            </div>
-
-            <div class="col-md-2">
-
-                <select
-                    class="form-select"
-                    name="type">
-
-                    <option value="">Plant Type</option>
-                    <option value="medicinal">Medicinal</option>
-                    <option value="flower">Flower</option>
-                    <option value="fruit">Fruit</option>
-                    <option value="vegetable">Vegetable</option>
-                    <option value="indoor">Indoor</option>
-
-                </select>
-
-            </div>
-
-            <div class="col-md-2">
-
-                <select
-                    class="form-select"
-                    name="location">
-
-                    <option value="">Location</option>
-                    <option value="terrence">Terrence</option>
-                    <option value="garden">Garden</option>
-                    <option value="balcony">Balcony</option>
-                    <option value="indoor">Indoor</option>
-
-                </select>
-
-            </div>
-
-            <div class="col-md-2">
-
-                <select
-                    class="form-select"
-                    name="frequency">
-
-                    <option value="">Water Every</option>
-                    <option value="1">1 Day</option>
-                    <option value="2">2 Days</option>
-                    <option value="3">3 Days</option>
-                    <option value="5">5 Days</option>
-                    <option value="7">7 Days</option>
-
-                </select>
-
-            </div>
-
-            <div class="col-md-2">
-
-                <button class="btn btn-primary w-100">
-
-                    🔍 Filter
-
-                </button>
-
-            </div>
-
-            <div class="col-md-1">
-
-                <a href="/plants" class="btn btn-secondary w-100">
-
-                    ↺
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </form>
-
-    <!-- Plant Table -->
-
-    <div class="card shadow">
-
-        <div class="card-body">
-
-            <table class="table table-hover table-striped align-middle">
-
-                <thead class="table-success">
-
-                    <tr>
-
-                        <th>ID</th>
-                        <th>Plant Name</th>
-                        <th>Plant Type</th>
-                        <th>Location</th>
-                        <th>Water Every</th>
-                        <th class="text-center">Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {% if plants %}
-
-                        {% for plant in plants %}
-
-                        <tr>
-
-                            <td>{{ plant[0] }}</td>
-
-                            <td>{{ plant[1] }}</td>
-
-                            <td>{{ plant[2] }}</td>
-
-                            <td>{{ plant[3] }}</td>
-
-                            <td>{{ plant[4] }} Day(s)</td>
-
-                            <td class="text-center">
-
-                                <a href="/edit-plant/{{ plant[0] }}"
-                                   class="btn btn-warning btn-sm">
-
-                                    ✏ Edit
-
-                                </a>
-
-                                <a href="/delete-plant/{{ plant[0] }}"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Are you sure you want to delete this plant?')">
-
-                                    🗑 Delete
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    {% else %}
-
-                        <tr>
-
-                            <td colspan="6" class="text-center text-danger">
-
-                                No plants found.
-
-                            </td>
-
-                        </tr>
-
-                    {% endif %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
+</div>
 
     <div class="mt-4">
 

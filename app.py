@@ -410,8 +410,8 @@ def delete_health(health_log_id):
 
 
 
-@app.route("/export")
-def export():
+@app.route("/export-csv")
+def export_csv():
 
     if "username" not in session:
         return redirect(url_for("login"))
@@ -422,6 +422,14 @@ def export():
         file_path,
         as_attachment=True
     )
+
+@app.route("/export")
+def export():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("export.html")
 
 
 # ==========================================

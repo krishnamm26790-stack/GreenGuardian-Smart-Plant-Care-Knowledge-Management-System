@@ -6,73 +6,131 @@ Record Watering
 
 {% block content %}
 
-<div class="container mt-5" style="max-width:700px;">
+<div class="container py-5">
 
-    <h1 class="text-primary mb-4">
-        💧 Record Watering
-    </h1>
+    <div class="row align-items-center">
 
-    <form method="POST">
+        <!-- Left Side -->
 
-        <div class="mb-3">
+        <div class="col-lg-6 mb-5">
 
-            <label class="form-label">
+            <h1 class="display-3 fw-bold">
+                💧 Record Watering
+            </h1>
 
-                Select Plant
+            <p class="lead text-muted mt-4">
 
-            </label>
+                Keep track of every watering session to maintain a healthy and thriving garden. Monitor your plants with smart watering records.
 
-            <select
-                name="plant_id"
-                class="form-control"
-                required>
+            </p>
 
-                {% for plant in plants %}
+            <div class="mt-5">
 
-                <option value="{{ plant[0] }}">
+                <span class="badge bg-success p-3 me-2">
+                    🌿 Plant Care
+                </span>
 
-                    {{ plant[1] }}
+                <span class="badge bg-primary p-3 me-2">
+                    💧 Smart Watering
+                </span>
 
-                </option>
+                <span class="badge bg-danger p-3">
+                    ❤️ Healthy Plants
+                </span>
 
-                {% endfor %}
-
-            </select>
-
-        </div>
-
-        <div class="mb-3">
-
-            <label class="form-label">
-
-                Notes
-
-            </label>
-
-            <textarea
-                name="notes"
-                class="form-control"
-                rows="4"
-                placeholder="Optional notes..."></textarea>
+            </div>
 
         </div>
 
-        <button
-            class="btn btn-primary">
+        <!-- Right Side -->
 
-            💧 Save Record
+        <div class="col-lg-6">
 
-        </button>
+            <div class="card shadow-lg border-0 rounded-4">
 
-        <a
-            href="/watering"
-            class="btn btn-secondary">
+                <div class="card-body p-5">
 
-            Cancel
+                    <h2 class="text-primary text-center fw-bold mb-2">
 
-        </a>
+                        💧 Record Watering
 
-    </form>
+                    </h2>
+
+                    <p class="text-center text-muted mb-4">
+
+                        Save your latest watering activity.
+
+                    </p>
+
+                    <form method="POST">
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                🌱 Select Plant
+
+                            </label>
+
+                            <select
+                                name="plant_id"
+                                class="form-select form-select-lg"
+                                required>
+
+                                {% for plant in plants %}
+
+                                <option value="{{ plant[0] }}">
+
+                                    {{ plant[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                📝 Notes
+
+                            </label>
+
+                            <textarea
+                                name="notes"
+                                class="form-control"
+                                rows="5"
+                                placeholder="Morning watering, added fertilizer, rainwater used..."></textarea>
+
+                        </div>
+
+                        <button
+                            class="btn btn-primary btn-lg w-100 rounded-3">
+
+                            💧 Save Watering Record
+
+                        </button>
+
+                        <a
+                            href="/watering"
+                            class="btn btn-outline-secondary btn-lg w-100 mt-3 rounded-3">
+
+                            ⬅ Back to Watering Center
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

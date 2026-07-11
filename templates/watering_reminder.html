@@ -6,98 +6,212 @@ Watering Reminder
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Hero -->
 
-        <h1 class="text-primary">
-            💧 Plants Due For Watering
-        </h1>
+    <div class="row align-items-center mb-5">
 
-        <a href="/watering" class="btn btn-primary">
-            📋 Watering Records
-        </a>
+        <div class="col-lg-8">
 
-    </div>
+            <h1 class="display-4 fw-bold">
+                💧 Watering Reminder
+            </h1>
 
-    <div class="card shadow">
+            <p class="lead text-muted mt-3">
 
-        <div class="card-body">
+                Stay ahead of your watering schedule and keep every plant healthy with smart reminders.
 
-            <table class="table table-hover table-striped align-middle">
+            </p>
 
-                <thead class="table-primary">
+        </div>
 
-                    <tr>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
 
-                        <th>ID</th>
-                        <th>Plant</th>
-                        <th>Location</th>
-                        <th>Water Every</th>
-                        <th>Last Watered</th>
+            <a href="/watering"
+               class="btn btn-primary btn-lg">
 
-                    </tr>
+                📋 Watering Records
 
-                </thead>
-
-                <tbody>
-
-                {% if plants %}
-
-                    {% for plant in plants %}
-
-                    <tr>
-
-                        <td>{{ plant[0] }}</td>
-                        <td>{{ plant[1] }}</td>
-                        <td>{{ plant[2] }}</td>
-                        <td>{{ plant[3] }} Day(s)</td>
-
-                        <td>
-
-                            {% if plant[4] %}
-                                {{ plant[4] }}
-                            {% else %}
-                                <span class="badge bg-danger">
-                                    Never Watered
-                                </span>
-                            {% endif %}
-
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <tr>
-
-                        <td colspan="5" class="text-center text-success">
-
-                            🎉 Great! No plants need watering today.
-
-                        </td>
-
-                    </tr>
-
-                {% endif %}
-
-                </tbody>
-
-            </table>
+            </a>
 
         </div>
 
     </div>
 
-    <br>
+    <!-- Summary -->
 
-    <a href="/dashboard" class="btn btn-secondary">
+    <div class="row mb-5">
 
-        ⬅ Back to Dashboard
+        <div class="col-md-4 mb-3">
 
-    </a>
+            <div class="card shadow border-0 rounded-4 text-center p-4">
+
+                <h1>🌱</h1>
+
+                <h2>{{ plants|length }}</h2>
+
+                <h5>Plants Due Today</h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow border-0 rounded-4 text-center p-4">
+
+                <h1>💧</h1>
+
+                <h2>Reminder</h2>
+
+                <h5>Water on Time</h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow border-0 rounded-4 text-center p-4">
+
+                <h1>❤️</h1>
+
+                <h2>Healthy</h2>
+
+                <h5>Healthy Plants</h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Plant Cards -->
+
+    {% if plants %}
+
+    <div class="row">
+
+        {% for plant in plants %}
+
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <h4 class="fw-bold">
+
+                            🌿 {{ plant[1] }}
+
+                        </h4>
+
+                        <span class="badge bg-success">
+
+                            #{{ plant[0] }}
+
+                        </span>
+
+                    </div>
+
+                    <hr>
+
+                    <p>
+
+                        📍 <strong>Location:</strong>
+
+                        {{ plant[2] }}
+
+                    </p>
+
+                    <p>
+
+                        💧 <strong>Water Every:</strong>
+
+                        {{ plant[3] }} Day(s)
+
+                    </p>
+
+                    <p>
+
+                        📅 <strong>Last Watered:</strong>
+
+                        {% if plant[4] %}
+
+                            {{ plant[4] }}
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+
+                                Never Watered
+
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                    <a href="/add-watering"
+                       class="btn btn-primary w-100 rounded-pill">
+
+                        💧 Record Watering
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body text-center py-5">
+
+            <h1>
+
+                🎉
+
+            </h1>
+
+            <h3>
+
+                Great Job!
+
+            </h3>
+
+            <p class="text-muted">
+
+                No plants require watering today.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <div class="text-center mt-5">
+
+        <a href="/dashboard"
+           class="btn btn-outline-secondary btn-lg">
+
+            ⬅ Back to Dashboard
+
+        </a>
+
+    </div>
 
 </div>
 
