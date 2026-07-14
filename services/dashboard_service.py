@@ -121,7 +121,7 @@ def watering_frequency_statistics(user_id):
         WHERE user_id = %s
         GROUP BY watering_frequency
         ORDER BY watering_frequency;
-    """,(user_id))
+    """,(user_id,))
 
     data = cursor.fetchall()
 
