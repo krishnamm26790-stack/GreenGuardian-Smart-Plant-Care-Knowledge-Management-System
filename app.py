@@ -96,7 +96,9 @@ def login():
 
         if user:
 
+            session["user_id"] = user[0]
             session["username"] = user[1]
+
 
             return redirect(url_for("dashboard"))
 
@@ -145,9 +147,9 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
-        total_plants=get_total_plants(),
-        watering_logs=get_total_watering_logs(),
-        health_logs=get_total_health_logs()
+        total_plants=get_total_plants(session["user_id"]),
+        watering_logs=get_total_watering_logs(session["user_id"]),
+        health_logs=get_total_health_logs(session["user_id"])
     )
 
 
@@ -159,9 +161,9 @@ def statistics():
 
     return render_template(
         "statistics.html",
-        type_stats=plants_by_type(),
-        location_stats=plants_by_location(),
-        frequency_stats=watering_frequency_statistics()
+        type_stats=plants_by_type(session["user_id"]),
+        location_stats=plants_by_location(session["user_id"]),
+        frequency_stats=watering_frequency_statistics(session["user_id"])
     )
 
 @app.route("/plants")
@@ -176,19 +178,19 @@ def plants():
     frequency = request.args.get("frequency")
 
     if search:
-        plants = search_plants(search)
+        plants = search_plants(session["user_id"],search)
 
     elif plant_type:
-        plants = filter_by_type(plant_type)
+        plants = filter_by_type(session["user_id"],plant_type)
 
     elif location:
-        plants = filter_by_location(location)
+        plants = filter_by_location(session["user_id"],location)
 
     elif frequency:
-        plants = filter_by_frequency(int(frequency))
+        plants = filter_by_frequency(session["user_id"],int(frequency))
 
     else:
-        plants = view_all_plants()
+        plants = view_all_plants(session["user_id"])
 
     return render_template(
         "plants.html",
@@ -210,6 +212,7 @@ def add_plant_page():
 
         add_plant(
             plant_name,
+            session["user_id"],
             plant_type,
             location,
             watering_frequency
@@ -236,6 +239,7 @@ def edit_plant(plant_id):
         watering_frequency = request.form["watering_frequency"]
 
         update_plant(
+            session["user_id"],
             plant_id,
             plant_name,
             plant_type,
@@ -247,7 +251,7 @@ def edit_plant(plant_id):
 
         return redirect(url_for("plants"))
 
-    plant = get_plant_by_id(plant_id)
+    plant = get_plant_by_id(session["user_id"],plant_id)
 
     return render_template(
         "edit_plant.html",
@@ -264,7 +268,7 @@ def delete_plant_route(plant_id):
 
     from services.plant_service import delete_plant
 
-    delete_plant(plant_id)
+    delete_plant(session["user_id"],plant_id)
 
     flash("Plant deleted successfully!")
 
@@ -282,7 +286,7 @@ def watering():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    records = view_watering_history()
+    records = view_watering_history(session["user_id"])
 
     return render_template(
         "watering.html",
@@ -302,6 +306,7 @@ def add_watering():
         notes = request.form["notes"]
 
         record_watering(
+            session["user_id"],
             plant_id,
             notes
         )
@@ -310,7 +315,7 @@ def add_watering():
 
         return redirect(url_for("watering"))
 
-    plants = get_all_plants()
+    plants = view_all_plants(session["user_id"])
 
     return render_template(
         "add_watering.html",
@@ -324,7 +329,7 @@ def delete_watering(log_id):
     if "username" not in session:
         return redirect(url_for("login"))
 
-    delete_watering_log(log_id)
+    delete_watering_log(session["user_id"],log_id)
 
     flash("Watering record deleted!")
 
@@ -337,7 +342,7 @@ def watering_reminder():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    plants = plants_due_for_watering()
+    plants = plants_due_for_watering(session["user_id"])
 
     return render_template(
         "watering_reminder.html",
@@ -356,7 +361,7 @@ def health():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    records = view_health_history()
+    records = view_health_history(session["user_id"])
 
     return render_template(
         "health.html",
@@ -377,6 +382,7 @@ def add_health():
         notes = request.form["notes"]
 
         record_health(
+            session["user_id"],
             plant_id,
             status,
             notes
@@ -386,7 +392,7 @@ def add_health():
 
         return redirect(url_for("health"))
 
-    plants = view_all_plants()
+    plants = view_all_plants(session["user_id"])
 
     return render_template(
         "add_health.html",
@@ -400,7 +406,7 @@ def delete_health(health_log_id):
     if "username" not in session:
         return redirect(url_for("login"))
 
-    delete_health_log(health_log_id)
+    delete_health_log(session["user_id"],health_log_id)
 
     flash("Health record deleted successfully!")
 
@@ -416,7 +422,7 @@ def export_csv():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    file_path = export_plants_csv()
+    file_path = export_plants_csv(session["user_id"])
 
     return send_file(
         file_path,

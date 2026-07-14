@@ -1,7 +1,7 @@
 from db import get_connection
 
 
-def record_health(plant_id, status, notes):
+def record_health(user_id,plant_id, status, notes):
     """
     Records a plant's health status.
     """
@@ -10,14 +10,16 @@ def record_health(plant_id, status, notes):
     cursor = connection.cursor()
 
     query = """
-    INSERT INTO health_logs
-    (plant_id, status, notes)
-    VALUES (%s, %s, %s);
+    INSERT INTO health_logs (plant_id, status, notes)
+    SELECT plant_id, %s, %s
+    FROM plants
+    WHERE plant_id = %s
+    AND user_id = %s;
     """
 
     cursor.execute(
         query,
-        (plant_id, status, notes)
+        ( status, notes, plant_id, user_id)
     )
 
     connection.commit()
@@ -30,7 +32,7 @@ def record_health(plant_id, status, notes):
 
 
 
-def view_health_history():
+def view_health_history(user_id):
     """
     Fetches complete health history.
     """
@@ -48,10 +50,11 @@ def view_health_history():
     FROM health_logs
     JOIN plants
     ON plants.plant_id = health_logs.plant_id
+    WHERE plants.user_id = %s
     ORDER BY health_log_id DESC;
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (user_id,))
 
     records = cursor.fetchall()
 
@@ -62,7 +65,7 @@ def view_health_history():
 
 
 
-def delete_health_log(health_log_id):
+def delete_health_log(user_id,health_log_id):
     """
     Deletes a health record.
     """
@@ -72,10 +75,17 @@ def delete_health_log(health_log_id):
 
     query = """
     DELETE FROM health_logs
-    WHERE health_log_id = %s;
+    WHERE health_log_id = %s AND plant_id IN (
+        SELECT h.log_id
+        FROM health_logs h
+        JOIN plants p
+        ON h.plant_id = p.plant_id
+        WHERE h.log_id = %s
+        AND p.user_id = %s
+);
     """
 
-    cursor.execute(query, (health_log_id,))
+    cursor.execute(query, (health_log_id, user_id))
 
     connection.commit()
 

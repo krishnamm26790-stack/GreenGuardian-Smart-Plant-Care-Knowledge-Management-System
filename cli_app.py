@@ -45,11 +45,12 @@ while True:
         if user:
 
             session.current_user = user[1]
+            session.current_user_id = user[0]
 
             success(f"Welcome {session.current_user}!")
 
             # Check if any plants need watering today
-            due_count = get_due_today_count()
+            due_count = get_due_today_count(session.current_user_id)
 
             if due_count > 0:
 
@@ -70,6 +71,8 @@ while True:
 
             # Logout when exiting main menu
             session.current_user = None
+            session.current_user_id = None
+
 
         else:
 

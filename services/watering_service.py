@@ -1,22 +1,21 @@
 from db import get_connection
 
-
-def record_watering(plant_id, notes):
-    """
-    Records a watering event for a plant.
-    """
+def record_watering(user_id, plant_id, notes):
 
     connection = get_connection()
     cursor = connection.cursor()
 
-    query = """
-    INSERT INTO watering_logs
-    (plant_id, notes)
-
-    VALUES (%s, %s);
-    """
-
-    cursor.execute(query, (plant_id, notes))
+    cursor.execute("""
+        INSERT INTO watering_logs (plant_id, notes)
+        SELECT plant_id, %s
+        FROM plants
+        WHERE plant_id = %s
+        AND user_id = %s;
+    """, (
+        notes,
+        plant_id,
+        user_id
+    ))
 
     connection.commit()
 
@@ -28,7 +27,7 @@ def record_watering(plant_id, notes):
 
 
 
-def view_watering_history():
+def view_watering_history(user_id):
     """
     Returns all watering history with plant names.
     """
@@ -45,10 +44,11 @@ def view_watering_history():
     FROM watering_logs w
     INNER JOIN plants p
         ON w.plant_id = p.plant_id
+    WHERE p.user_id = %s
     ORDER BY w.watered_on DESC, w.log_id DESC;
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (user_id,))
 
     records = cursor.fetchall()
 
@@ -59,7 +59,7 @@ def view_watering_history():
 
 
 
-def delete_watering_log(log_id):
+def delete_watering_log(user_id,log_id):
     """
     Deletes a watering record.
     """
@@ -68,11 +68,18 @@ def delete_watering_log(log_id):
     cursor = connection.cursor()
 
     query = """
-    DELETE FROM watering_logs
-    WHERE log_id = %s;
+DELETE FROM watering_logs
+WHERE log_id IN (
+    SELECT w.log_id
+    FROM watering_logs w
+    JOIN plants p
+        ON w.plant_id = p.plant_id
+    WHERE w.log_id = %s
+    AND p.user_id = %s
+);
     """
 
-    cursor.execute(query, (log_id,))
+    cursor.execute(query, (log_id,user_id))
 
     if cursor.rowcount == 0:
         print("❌ Watering record not found.")
@@ -84,7 +91,7 @@ def delete_watering_log(log_id):
     connection.close()
 
 
-def plants_due_for_watering():
+def plants_due_for_watering(user_id):
     """
     Returns all plants that need watering today.
     """
@@ -100,16 +107,18 @@ def plants_due_for_watering():
         p.watering_frequency,
         MAX(w.watered_on) AS last_watered
 
-    FROM plants p
+FROM plants p
 
-    LEFT JOIN watering_logs w
-        ON p.plant_id = w.plant_id
+LEFT JOIN watering_logs w
+ON p.plant_id = w.plant_id
 
-    GROUP BY
-        p.plant_id,
-        p.plant_name,
-        p.location,
-        p.watering_frequency
+WHERE p.user_id = %s
+
+GROUP BY
+    p.plant_id,
+    p.plant_name,
+    p.location,
+    p.watering_frequency
 
     HAVING
 
@@ -123,7 +132,7 @@ def plants_due_for_watering():
     ORDER BY p.plant_name;
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (user_id,))
 
     plants = cursor.fetchall()
 
@@ -132,7 +141,7 @@ def plants_due_for_watering():
 
     return plants
 
-def get_due_today_count():
+def get_due_today_count(user_id):
     """
     Returns the number of plants that need watering today.
     """
@@ -155,19 +164,23 @@ def get_due_today_count():
 
     ON p.plant_id = w.plant_id
 
-    WHERE
+WHERE p.user_id = %s
+AND
+(
+    w.last_watered IS NULL
 
-        w.last_watered IS NULL
+    OR
 
-        OR
-
-        CURRENT_DATE >=
-        (w.last_watered + p.watering_frequency);
+    CURRENT_DATE >=
+    (w.last_watered + p.watering_frequency)
+)
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (user_id,))
+    print("USER ID RECEIVED:", user_id)
 
     total = cursor.fetchone()[0]
+    print("TOTAL:", total)
 
     cursor.close()
     connection.close()

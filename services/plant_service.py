@@ -1,7 +1,7 @@
 from db import get_connection
 
 
-def add_plant(plant_name, plant_type, location, watering_frequency):
+def add_plant(plant_name, user_id, plant_type, location, watering_frequency):
     """
     Adds a new plant to the database.
     """
@@ -11,14 +11,14 @@ def add_plant(plant_name, plant_type, location, watering_frequency):
 
     query = """
     INSERT INTO plants
-    (plant_name, plant_type, location, watering_frequency)
+    (user_id, plant_name, plant_type, location, watering_frequency)
 
-    VALUES (%s, %s, %s, %s);
+    VALUES (%s,%s, %s, %s, %s);
     """
 
     cursor.execute(
         query,
-        (plant_name, plant_type, location, watering_frequency)
+        (user_id,plant_name, plant_type, location, watering_frequency)
     )
 
     connection.commit()
@@ -32,7 +32,7 @@ def add_plant(plant_name, plant_type, location, watering_frequency):
 
 
 
-def view_all_plants():
+def view_all_plants(user_id):
     """
     Fetches and returns all plants from the database.
     """
@@ -43,10 +43,11 @@ def view_all_plants():
     query = """
     SELECT *
     FROM plants
+    WHERE user_id = %s
     ORDER BY plant_id;
     """
 
-    cursor.execute(query)
+    cursor.execute(query , (user_id,))
 
     plants = cursor.fetchall()
 
@@ -56,7 +57,7 @@ def view_all_plants():
     return plants
 
 
-def get_plant_by_id(plant_id):
+def get_plant_by_id(user_id,plant_id):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -65,7 +66,8 @@ def get_plant_by_id(plant_id):
         SELECT *
         FROM plants
         WHERE plant_id=%s
-    """, (plant_id,))
+        AND user_id=%s           
+    """, (plant_id,user_id))
 
     plant = cursor.fetchone()
 
@@ -78,6 +80,7 @@ def get_plant_by_id(plant_id):
 
 
 def update_plant(
+    user_id,
     plant_id,
     plant_name,
     plant_type,
@@ -96,12 +99,14 @@ def update_plant(
             location=%s,
             watering_frequency=%s
         WHERE plant_id=%s
+        AND user_id=%s
     """, (
         plant_name,
         plant_type,
         location,
         watering_frequency,
-        plant_id
+        plant_id,
+        user_id
     ))
 
     conn.commit()
@@ -111,7 +116,7 @@ def update_plant(
 
 
 
-def delete_plant(plant_id):
+def delete_plant(user_id,plant_id):
     """
     Deletes a plant from the database.
     """
@@ -121,10 +126,11 @@ def delete_plant(plant_id):
 
     query = """
     DELETE FROM plants
-    WHERE plant_id = %s;
+    WHERE plant_id = %s
+    AND user_id = %s;
     """
 
-    cursor.execute(query, (plant_id,))
+    cursor.execute(query, (plant_id,user_id))
 
     connection.commit()
 
@@ -136,7 +142,7 @@ def delete_plant(plant_id):
 
 
 
-def search_plants(keyword):
+def search_plants(user_id,keyword):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -144,12 +150,15 @@ def search_plants(keyword):
     cursor.execute("""
         SELECT *
         FROM plants
-        WHERE
+        WHERE user_id = %s
+        AND (
             LOWER(plant_name) LIKE LOWER(%s)
             OR LOWER(plant_type) LIKE LOWER(%s)
             OR LOWER(location) LIKE LOWER(%s)
+            )
         ORDER BY plant_id;
     """, (
+        user_id,
         f"%{keyword}%",
         f"%{keyword}%",
         f"%{keyword}%"
@@ -162,7 +171,7 @@ def search_plants(keyword):
 
     return records
 
-def filter_by_type(plant_type):
+def filter_by_type(user_id,plant_type):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -170,9 +179,10 @@ def filter_by_type(plant_type):
     cursor.execute("""
         SELECT *
         FROM plants
-        WHERE LOWER(plant_type)=LOWER(%s)
+        WHERE user_id =%s 
+        AND LOWER(plant_type)=LOWER(%s)
         ORDER BY plant_id;
-    """, (plant_type,))
+    """, (user_id,plant_type,))
 
     plants = cursor.fetchall()
 
@@ -182,7 +192,7 @@ def filter_by_type(plant_type):
     return plants
 
 
-def filter_by_location(location):
+def filter_by_location(user_id,location):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -190,9 +200,10 @@ def filter_by_location(location):
     cursor.execute("""
         SELECT *
         FROM plants
-        WHERE LOWER(location)=LOWER(%s)
+        WHERE user_id = %s
+        AND LOWER(location)=LOWER(%s)
         ORDER BY plant_id;
-    """, (location,))
+    """, (user_id,location,))
 
     plants = cursor.fetchall()
 
@@ -202,7 +213,7 @@ def filter_by_location(location):
     return plants
 
 
-def filter_by_frequency(days):
+def filter_by_frequency(user_id,days):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -210,9 +221,10 @@ def filter_by_frequency(days):
     cursor.execute("""
         SELECT *
         FROM plants
-        WHERE watering_frequency=%s
+        WHERE user_id = %s
+        AND watering_frequency=%s
         ORDER BY plant_id;
-    """, (days,))
+    """, (user_id,days,))
 
     plants = cursor.fetchall()
 
@@ -220,3 +232,4 @@ def filter_by_frequency(days):
     conn.close()
 
     return plants
+

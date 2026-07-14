@@ -16,7 +16,7 @@ def create_export_folder():
         os.makedirs(EXPORT_FOLDER)
 
 
-def export_plants_csv():
+def export_plants_csv(user_id):
     """
     Exports all plants to a CSV file.
     """
@@ -36,8 +36,9 @@ def export_plants_csv():
             quantity,
             notes
         FROM plants
+        WHERE user_id = %s
         ORDER BY plant_id;
-    """)
+    """,(user_id,))
 
     plants = cursor.fetchall()
 
@@ -65,7 +66,7 @@ def export_plants_csv():
     return file_path
 
 
-def export_watering_csv():
+def export_watering_csv(user_id):
     """
     Exports watering history to a CSV file.
     """
@@ -82,10 +83,11 @@ def export_watering_csv():
             w.watered_on,
             w.notes
         FROM watering_logs w
+        WHERE p.user_id = %s
         JOIN plants p
             ON w.plant_id = p.plant_id
         ORDER BY w.watered_on DESC;
-    """)
+    """,(user_id,))
 
     records = cursor.fetchall()
 
@@ -110,7 +112,7 @@ def export_watering_csv():
     return file_path
 
 
-def export_health_csv():
+def export_health_csv(user_id):
     """
     Exports health history to a CSV file.
     """
@@ -128,10 +130,11 @@ def export_health_csv():
             h.observed_on,
             h.notes
         FROM health_logs h
+        WHERE p.user_id = %s
         JOIN plants p
             ON h.plant_id = p.plant_id
         ORDER BY h.observed_on DESC;
-    """)
+    """,(user_id,))
 
     records = cursor.fetchall()
 

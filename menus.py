@@ -7,7 +7,7 @@ from ui import *
 from services.plant_service import (
     add_plant,
     view_all_plants,
-    update_plant_location,
+    update_plant,
     delete_plant,
     search_plants,
     filter_by_type,
@@ -186,18 +186,19 @@ def plant_menu():
             watering_frequency = get_int("Watering Frequency (days): ")
 
             add_plant(
-                plant_name,
-                plant_type,
-                location,
-                watering_frequency
-            )
+                    plant_name,
+                    session.current_user_id,
+                    plant_type,
+                    location,
+                    watering_frequency
+                )
 
             success(f'"{plant_name}" added successfully! 🌱')
             pause()
 
         elif plant_choice == 2:
 
-            plants = view_all_plants()
+            plants = view_all_plants(session.current_user_id)
 
             if plants:
 
@@ -222,7 +223,7 @@ def plant_menu():
 
             keyword = get_string("Enter plant name/type/location : ")
 
-            plants = search_plants(keyword)
+            plants = search_plants(session.current_user_id,keyword)
 
             if plants:
 
@@ -252,7 +253,7 @@ def plant_menu():
             plant_id = get_int("Plant ID : ")
             new_location = get_string("New Location : ")
 
-            update_plant_location(
+            update_plant(
                 plant_id,
                 new_location
             )
@@ -264,7 +265,7 @@ def plant_menu():
 
             plant_id = get_int("Plant ID : ")
 
-            delete_plant(plant_id)
+            delete_plant(session.current_user_id,plant_id)
 
             success(f"Plant ID {plant_id} deleted successfully.")
             pause()
@@ -305,7 +306,7 @@ def filter_menu():
 
             plant_type = get_string("Plant Type : ")
 
-            plants = filter_by_type(plant_type)
+            plants = filter_by_type(session.current_user_id,plant_type)
 
             if plants:
                 print()
@@ -319,7 +320,7 @@ def filter_menu():
 
             location = get_string("Location : ")
 
-            plants = filter_by_location(location)
+            plants = filter_by_location(session.current_user_id,location)
 
             if plants:
                 print()
@@ -333,7 +334,7 @@ def filter_menu():
 
             days = get_int("Water Every (Days): ")
 
-            plants = filter_by_frequency(days)
+            plants = filter_by_frequency(session.current_user_id,days)
 
             if plants:
                 print()
@@ -376,6 +377,7 @@ def watering_menu():
             notes = get_string("Notes : ")
 
             record_watering(
+                session.current_user_id,
                 plant_id,
                 notes
             )
@@ -385,7 +387,7 @@ def watering_menu():
 
         elif water_choice == 3:
 
-            records = view_watering_history()
+            records = view_watering_history(session.current_user_id)
 
             if records:
 
@@ -408,7 +410,7 @@ def watering_menu():
 
             log_id = get_int("Log ID : ")
 
-            delete_watering_log(log_id)
+            delete_watering_log(session.current_user_id,log_id)
             success(f"Watering log {log_id} deleted.")
 
             pause()
@@ -443,13 +445,14 @@ def health_menu():
             notes = get_string("Notes : ")
 
             record_health(
+                session.current_user_id,
                 plant_id,
                 status,
                 notes
             )
 
         elif health_choice == 2:
-            records = view_health_history()
+            records = view_health_history(session.current_user_id)
 
             if records:
 
@@ -471,7 +474,7 @@ def health_menu():
         elif health_choice == 3:
 
             log_id = get_int(("Health Log ID : "))
-            delete_health_log(log_id)
+            delete_health_log(session.current_user_id,log_id)
             success(f"Health log {log_id} deleted.")
             pause()
 
@@ -490,7 +493,7 @@ def knowledge_menu():
 
         title("📚 PLANT KNOWLEDGE")
 
-        records = view_all_knowledge()
+        records = view_all_knowledge(session.current_user_id)
 
         if records:
 
@@ -567,7 +570,7 @@ def watering_reminder():
 
     title("💧 WATERING REMINDERS")
 
-    plants = plants_due_for_watering()
+    plants = plants_due_for_watering(session.current_user_id)
 
     if not plants:
 
